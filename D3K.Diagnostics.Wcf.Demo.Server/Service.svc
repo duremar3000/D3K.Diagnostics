@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="D3K.Diagnostics.Wcf.Demo.Server.Service" CodeBehind="Service.svc.cs" Factory="D3K.Diagnostics.Wcf.Demo.Server.ServiceHostFactory"%>

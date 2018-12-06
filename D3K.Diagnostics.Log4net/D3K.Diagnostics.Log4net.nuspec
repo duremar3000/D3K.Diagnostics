@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>D3K.Diagnostics.Log4net</id>
+		<version>1.0.0</version>
+		<title>D3K.Diagnostics.Log4net</title>
+		<authors>duremar3000</authors>
+		<owners>duremar3000</owners>    
+		<projectUrl>https://github.com/duremar3000/D3K.Diagnostics</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>D3K.Diagnostics.Log4net</description>
+		<copyright>Copyright 2018</copyright>   
+		<dependencies>
+			<dependency id="D3K.Diagnostics.Core" version="1.0.0" />
+			<dependency id="log4net" version="2.0.8" />
+		</dependencies>
+	</metadata>
+
+	<files>
+		<file src="bin\Debug\*.dll" target="lib" />
+		<file src="bin\Debug\*.pdb" target="lib" />
+	</files>  
+</package>
