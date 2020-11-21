@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>D3K.Diagnostics.Lamar.Demo.Log4net</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lamar" Version="4.3.1" />
+    <PackageReference Include="Lamar.DynamicInterception" Version="1.0.1" />
+    <PackageReference Include="Lamar.Microsoft.DependencyInjection" Version="4.3.1" />
+    <PackageReference Include="log4net" Version="2.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\D3K.Diagnostics.Lamar\D3K.Diagnostics.Lamar.csproj" />
+    <ProjectReference Include="..\D3K.Diagnostics.Log4net\D3K.Diagnostics.Log4net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

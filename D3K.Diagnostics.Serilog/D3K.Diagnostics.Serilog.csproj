@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>4.0.0</Version>
+    <Copyright>Copyright 2020</Copyright>
+    <Authors>duremar3000</Authors>
+    <Company>D3K</Company>
+    <Description>D3K.Diagnostics.Serilog</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/duremar3000/D3K.Diagnostics</PackageProjectUrl>
+    <PackageTags>log logging log4net nlog serilog autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Enrichers.Context" Version="4.2.0" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Settings.AppSettings" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\D3K.Diagnostics.Core\D3K.Diagnostics.Core.csproj" />
+  </ItemGroup>
+
+</Project>

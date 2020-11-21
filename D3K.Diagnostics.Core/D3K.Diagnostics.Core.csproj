@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.0.0</Version>
-    <Company>D3K</Company>
+    <Version>4.0.0</Version>
     <Authors>duremar3000</Authors>
+    <Company>D3K</Company>
     <Description>D3K.Diagnostics.Core</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/duremar3000/D3K.Diagnostics</PackageProjectUrl>
-    <PackageTags>log logging log4net nlog unity interception</PackageTags>
+    <PackageTags>log logging log4net nlog serilog autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
+    <Copyright>Copyright 2020</Copyright>
   </PropertyGroup>
 
 </Project>

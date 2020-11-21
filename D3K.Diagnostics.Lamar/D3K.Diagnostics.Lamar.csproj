@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>4.0.0</Version>
+    <Company>D3K</Company>
+    <Description>D3K.Diagnostics.Lamar</Description>
+    <Authors>duremar3000</Authors>
+    <Copyright>Copyright 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/duremar3000/D3K.Diagnostics</PackageProjectUrl>
+    <PackageTags>log logging log4net nlog serilog autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lamar" Version="4.3.1" />
+    <PackageReference Include="Lamar.DynamicInterception" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\D3K.Diagnostics.Common\D3K.Diagnostics.Common.csproj" />
+    <ProjectReference Include="..\D3K.Diagnostics.Core\D3K.Diagnostics.Core.csproj" />
+  </ItemGroup>
+
+</Project>

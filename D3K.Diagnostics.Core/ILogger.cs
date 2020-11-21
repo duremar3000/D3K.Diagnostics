@@ -5,14 +5,14 @@ namespace D3K.Diagnostics.Core
 {
     public interface ILogger
     {
-        void Debug(string msg);
+        void Debug(object msg);
 
-        void Info(string msg);
+        void Info(object msg);
 
-        void Warning(string msg);
+        void Warning(object msg);
 
-        void Error(string msg, Exception exp);
+        void Error(object msg, Exception exp);
 
-        void Error(string msg);
+        void Error(object msg);
     }
 }

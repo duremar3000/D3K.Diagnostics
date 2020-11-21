@@ -59,17 +59,17 @@ namespace D3K.Diagnostics.Core
 
         #region Methods
 
-        public void Attach(ILogObserver observer)
+        public void Attach(ILogListener listener)
         {
-            Log += observer.Log;
+            Log += listener.Log;
         }
 
-        public void Detach(ILogObserver observer)
+        public void Detach(ILogListener listener)
         {
-            Log -= observer.Log;
+            Log -= listener.Log;
         }
 
-        public void Debug(string message)
+        public void Debug(object message)
         {
             if (_isDebug)
             {
@@ -77,67 +77,67 @@ namespace D3K.Diagnostics.Core
             }
         }
 
-        public void Debug(string message, Exception exception)
+        public void Debug(object message, Exception exception)
         {
             if (_isDebug)
             {
-                OnLog(new LogEventArgs(LogSeverity.Debug, message, exception, DateTime.Now));
+                OnLog(new LogEventArgs(LogSeverity.Debug, message.ToString(), exception, DateTime.Now));
             }
         }
 
-        public void Info(string message)
+        public void Info(object message)
         {
             if (_isInfo)
                 Info(message, null);
         }
 
-        public void Info(string message, Exception exception)
+        public void Info(object message, Exception exception)
         {
             if (_isInfo)
             {
-                OnLog(new LogEventArgs(LogSeverity.Info, message, exception, DateTime.Now));
+                OnLog(new LogEventArgs(LogSeverity.Info, message.ToString(), exception, DateTime.Now));
             }
         }
 
-        public void Warning(string message)
+        public void Warning(object message)
         {
             if (_isWarning)
                 Warning(message, null);
         }
 
-        public void Warning(string message, Exception exception)
+        public void Warning(object message, Exception exception)
         {
             if (_isWarning)
             {
-                OnLog(new LogEventArgs(LogSeverity.Warning, message, exception, DateTime.Now));
+                OnLog(new LogEventArgs(LogSeverity.Warning, message.ToString(), exception, DateTime.Now));
             }
         }
 
-        public void Error(string message)
+        public void Error(object message)
         {
             if (_isError)
                 Error(message, null);
         }
 
-        public void Error(string message, Exception exception)
+        public void Error(object message, Exception exception)
         {
             if (_isError)
             {
-                OnLog(new LogEventArgs(LogSeverity.Error, message, exception, DateTime.Now));
+                OnLog(new LogEventArgs(LogSeverity.Error, message.ToString(), exception, DateTime.Now));
             }
         }
 
-        public void Fatal(string message)
+        public void Fatal(object message)
         {
             if (_isFatal)
                 Fatal(message, null);
         }
 
-        public void Fatal(string message, Exception exception)
+        public void Fatal(object message, Exception exception)
         {
             if (_isFatal)
             {
-                OnLog(new LogEventArgs(LogSeverity.Fatal, message, exception, DateTime.Now));
+                OnLog(new LogEventArgs(LogSeverity.Fatal, message.ToString(), exception, DateTime.Now));
             }
         }
 

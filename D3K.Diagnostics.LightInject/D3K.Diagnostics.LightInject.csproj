@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>4.0.0</Version>
+    <Company>D3K</Company>
+    <Description>D3K.Diagnostics.LightInject</Description>
+    <Authors>duremar3000</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright 2020</Copyright>
+    <PackageProjectUrl>https://github.com/duremar3000/D3K.Diagnostics</PackageProjectUrl>
+    <PackageTags>log logging log4net nlog serilog autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LightInject" Version="6.4.0" />
+    <PackageReference Include="LightInject.Interception" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\D3K.Diagnostics.Common\D3K.Diagnostics.Common.csproj" />
+    <ProjectReference Include="..\D3K.Diagnostics.Core\D3K.Diagnostics.Core.csproj" />
+  </ItemGroup>
+
+</Project>
