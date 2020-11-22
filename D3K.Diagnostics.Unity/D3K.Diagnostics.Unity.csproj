@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>4.0.0</Version>
+    <Version>4.0.1</Version>
     <PackageTags>log logging log4net nlog serilog autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
     <Copyright>Copyright 2020</Copyright>
     <PackageProjectUrl>https://github.com/duremar3000/D3K.Diagnostics</PackageProjectUrl>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity" Version="5.11.7" />
+    <PackageReference Include="Unity" Version="5.11.1" />
     <PackageReference Include="Unity.Interception" Version="5.11.1" />
   </ItemGroup>
 
