@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>4.1.0</Version>
+    <Version>4.0.0</Version>
     <PackageTags>log logging log4net nlog serilog autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
     <Company>D3K</Company>
     <Authors>duremar3000</Authors>
