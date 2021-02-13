@@ -61,7 +61,7 @@ namespace D3K.Diagnostics.SimpleInjector.Demo.Log4net
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.SimpleInjector.Demo_Log4net";
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.SimpleInjector.Demo.Log4net";
         }
     }
 

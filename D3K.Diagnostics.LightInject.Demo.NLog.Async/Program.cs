@@ -63,7 +63,7 @@ namespace D3K.Diagnostics.LightInject.Demo.NLog.Async
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.LightInject.Demo_NLog_Async";
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.LightInject.Demo.NLog.Async";
         }
 
         private static void DefineProxyType(IServiceFactory serviceFactory, ProxyDefinition proxyDefinition)

@@ -63,7 +63,7 @@ namespace D3K.Diagnostics.SimpleInjector.Demo.Serilog
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.SimpleInjector.Demo_Serilog";
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.SimpleInjector.Demo.Serilog";
         }
     }
 

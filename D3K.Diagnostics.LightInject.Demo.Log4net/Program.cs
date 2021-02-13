@@ -62,7 +62,7 @@ namespace D3K.Diagnostics.LightInject.Demo.Log4net
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.LightInject.Demo_Log4net";
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.LightInject.Demo.Log4net";
         }
 
         private static void DefineProxyType(IServiceFactory serviceFactory, ProxyDefinition proxyDefinition)
