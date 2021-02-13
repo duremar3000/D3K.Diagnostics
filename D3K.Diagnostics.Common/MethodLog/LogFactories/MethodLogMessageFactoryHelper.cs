@@ -40,7 +40,7 @@ namespace D3K.Diagnostics.Common
                 }
             }
 
-            var items = namespaces.OrderByDescending(i => i.Count());
+            var items = namespaces.OrderByDescending(i => i?.Count() ?? 0);
 
             foreach (string item in items)
             {
