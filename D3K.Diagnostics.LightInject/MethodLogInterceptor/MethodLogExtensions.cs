@@ -35,6 +35,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, LogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }
@@ -63,6 +65,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }
@@ -89,6 +93,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, LogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }
@@ -116,6 +122,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }
@@ -143,6 +151,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, LogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }
@@ -171,6 +181,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }
@@ -197,6 +209,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, LogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }
@@ -224,6 +238,8 @@ namespace D3K.Diagnostics.LightInject
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapper>(name));
             container.Register<ILogValueMapper, LogValueMapper>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogMessageFactory>(name));
+            container.Register<ILogMessageFactory, LogMessageFactory>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogValueMapperConfigurator>(name));
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
         }

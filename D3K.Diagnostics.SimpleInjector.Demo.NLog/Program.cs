@@ -2,17 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using NLog.Extensions.Logging;
-
 using SimpleInjector;
 using SimpleInjector.InterceptorExtensions;
-using SimpleInjector.Lifestyles;
 
-using D3K.Diagnostics.NLogExtensions;
 using D3K.Diagnostics.Castle;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using D3K.Diagnostics.Demo;
+using D3K.Diagnostics.NLogExtensions;
 
 namespace D3K.Diagnostics.SimpleInjector.Demo.NLog
 {
@@ -20,31 +15,16 @@ namespace D3K.Diagnostics.SimpleInjector.Demo.NLog
     {
         static void Main(string[] args)
         {
-            using (var host = CreateHost(args))
+            using (var container = new Container())
             {
-                host.Run();
+                RegisterDependencies(container);
+
+                var demoApp = container.GetInstance<IDemoApp>();
+
+                demoApp.Run();
 
                 Console.ReadLine();
             }
-        }
-
-        public static IHost CreateHost(string[] args)
-        {
-            var container = new Container();
-
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-
-            RegisterDependencies(container);
-
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostBuilderContext, logging) => { logging.AddNLog(); })
-                .ConfigureServices((hostBuilderContext, services) => { services.AddSimpleInjector(container, options => { options.AddHostedService<DemoHostedService>(); }); })                
-                .UseConsoleLifetime();
-
-            var host = hostBuilder.Build()
-                .UseSimpleInjector(container);
-
-            return host;
         }
 
         private static void RegisterDependencies(Container container)
@@ -56,6 +36,7 @@ namespace D3K.Diagnostics.SimpleInjector.Demo.NLog
             container.Register<IHelloWorldService, HelloWorldService>();
             container.Register<IHelloService, HelloService>();
             container.Register<IWorldService, WorldService>();
+            container.Register<IPrinter, Printer>();
 
             container.InterceptWith<MethodLogInterceptor>(InterceptPredicate);
             container.InterceptWith<MethodIdentityInterceptor>(InterceptPredicate);
@@ -63,31 +44,7 @@ namespace D3K.Diagnostics.SimpleInjector.Demo.NLog
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.SimpleInjector.Demo.NLog";
-        }
-    }
-
-    public class DemoHostedService : IHostedService
-    {
-        readonly Container _container;
-
-        public DemoHostedService(Container container)
-        {
-            _container = container;
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            var demoApp = _container.GetInstance<IDemoApp>();
-
-            demoApp.Run();
-
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.Demo";
         }
     }
 }

@@ -1,61 +1,49 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 using D3K.Diagnostics.Core;
 
 namespace D3K.Diagnostics.SerilogExtensions
 {
-    public class SerilogLogListener: ILogListener
+    public class SerilogLogListener : ILogListener
     {
         readonly Serilog.ILogger _logger;
+        readonly ILoggerParamsFactory _serilogParamsFactory;
 
-        public SerilogLogListener(Serilog.ILogger logger)
+        public SerilogLogListener(Serilog.ILogger logger, ILoggerParamsFactory serilogParamsFactory)
         {
             _logger = logger ?? throw new ArgumentNullException();
+            _serilogParamsFactory = serilogParamsFactory ?? throw new ArgumentNullException();
         }
 
         public void Log(object sender, LogEventArgs e)
         {
+            var (serilogMessageTemplate, serilogPropertyValues) = _serilogParamsFactory.CreateLoggerParams(e.Message);
+
             switch (e.Severity)
             {
                 case LogSeverity.Debug:
-                    var debugMsg = CreatetMessage(e.Message);
-                    _logger.Debug(debugMsg);
+                    _logger.Debug(serilogMessageTemplate, serilogPropertyValues);
                     break;
 
                 case LogSeverity.Info:
-                    var infoMsg = CreatetMessage(e.Message);
-                    _logger.Information(infoMsg);
+                    _logger.Information(serilogMessageTemplate, serilogPropertyValues);
                     break;
 
                 case LogSeverity.Warning:
-                    var warningMsg = CreatetMessage(e.Message);
-                    _logger.Warning(warningMsg);
+                    _logger.Warning(serilogMessageTemplate, serilogPropertyValues);
                     break;
 
                 case LogSeverity.Error:
-                    var errorMsg = CreatetMessage(e.Message, e.Exception);
-                    _logger.Error(errorMsg);
+                    _logger.Error(e.Message["Exception"] as Exception, serilogMessageTemplate, serilogPropertyValues);
                     break;
 
                 case LogSeverity.Fatal:
-                    var fatalMsg = CreatetMessage(e.Message);
-                    _logger.Fatal(fatalMsg);
+                    _logger.Fatal(serilogMessageTemplate, serilogPropertyValues);
                     break;
             }
-        }
-
-        private static string CreatetMessage(string message, Exception exception = null)
-        {
-            var sb = new StringBuilder(message);
-
-            if (exception != null)
-            {
-                sb.AppendLine();
-                sb.AppendLine(exception.ToString());
-            }
-
-            return sb.ToString();
         }
     }
 }

@@ -29,6 +29,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
 
@@ -50,6 +51,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
 
@@ -69,6 +71,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
 
@@ -89,6 +92,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
 
@@ -109,6 +113,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
 
@@ -130,6 +135,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
 
@@ -149,6 +155,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
 
@@ -169,6 +176,7 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
     }

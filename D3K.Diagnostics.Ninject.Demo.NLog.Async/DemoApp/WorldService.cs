@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace D3K.Diagnostics.Ninject.Demo.NLog.Async
+namespace D3K.Diagnostics.Demo
 {
     public class WorldService : IWorldService
     {
-        public async Task<string> GetWorld()
+        public async Task<WorldModel> GetWorld()
         {
             await Task.Delay(5000);
 
-            return "World";
+            return new WorldModel();
         }
     }
 }

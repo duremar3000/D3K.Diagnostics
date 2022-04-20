@@ -2,13 +2,9 @@
 
 using LightInject;
 using LightInject.Interception;
-using LightInject.Microsoft.DependencyInjection;
 
 using D3K.Diagnostics.Log4netExtensions;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
+using D3K.Diagnostics.Demo;
 
 namespace D3K.Diagnostics.LightInject.Demo.Log4net.Async
 {
@@ -16,30 +12,16 @@ namespace D3K.Diagnostics.LightInject.Demo.Log4net.Async
     {
         static void Main(string[] args)
         {
-            using (var host = CreateHost(args))
+            using (var container = new ServiceContainer())
             {
-                using (var sc = host.Services.CreateScope())
-                {
-                    var demoApp = sc.ServiceProvider.GetRequiredService<IDemoApp>();
+                RegisterDependecies(container);
 
-                    demoApp.RunAsync();
+                var demoApp = container.GetInstance<IDemoApp>();
 
-                    Console.ReadLine();
-                }
+                demoApp.RunAsync();
+
+                Console.ReadLine();
             }
-        }
-
-        public static IHost CreateHost(string[] args)
-        {
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostBuilderContext, logging) => { logging.AddLog4Net(); })
-                .UseServiceProviderFactory(new LightInjectServiceProviderFactory(options => options.EnablePropertyInjection = true))
-                .ConfigureContainer<IServiceContainer>(RegisterDependecies)
-                .UseConsoleLifetime();
-
-            var host = hostBuilder.Build();
-
-            return host;
         }
 
         private static void RegisterDependecies(IServiceContainer container)
@@ -47,12 +29,17 @@ namespace D3K.Diagnostics.LightInject.Demo.Log4net.Async
             container.RegisterMethodLogAsyncInterceptor<Log4netLogListenerFactory>("log", "Debug");
             container.RegisterMethodIdentityAsyncInterceptor<Log4netLogContext>("pid", "pid");
 
+            container.RegisterMethodLogInterceptor<Log4netLogListenerFactory>("syncLog", "Debug");
+            container.RegisterMethodIdentityInterceptor<Log4netLogContext>("syncPid", "pid");
+
             container.Intercept(InterceptPredicate, DefineProxyType);
+            container.Intercept(SyncInterceptPredicate, SyncDefineProxyType);
 
             container.Register<IDemoApp, DemoApp>();
             container.Register<IHelloWorldService, HelloWorldService>();
             container.Register<IHelloService, HelloService>();
             container.Register<IWorldService, WorldService>();
+            container.Register<IPrinter, Printer>();
         }
 
         private static bool InterceptPredicate(ServiceRegistration serviceRegistration)
@@ -62,13 +49,29 @@ namespace D3K.Diagnostics.LightInject.Demo.Log4net.Async
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.LightInject.Demo.Log4net.Async";
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.Demo" && type != typeof(IPrinter);
         }
 
         private static void DefineProxyType(IServiceFactory serviceFactory, ProxyDefinition proxyDefinition)
         {
             proxyDefinition.Implement(() => serviceFactory.GetInstance<IInterceptor>("pid"));
             proxyDefinition.Implement(() => serviceFactory.GetInstance<IInterceptor>("log"));
+        }
+
+        private static bool SyncInterceptPredicate(ServiceRegistration serviceRegistration)
+        {
+            return SyncInterceptPredicate(serviceRegistration.ServiceType);
+        }
+
+        private static bool SyncInterceptPredicate(Type type)
+        {
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.Demo" && type == typeof(IPrinter);
+        }
+
+        private static void SyncDefineProxyType(IServiceFactory serviceFactory, ProxyDefinition proxyDefinition)
+        {
+            proxyDefinition.Implement(() => serviceFactory.GetInstance<IInterceptor>("syncPid"));
+            proxyDefinition.Implement(() => serviceFactory.GetInstance<IInterceptor>("syncLog"));
         }
     }
 }

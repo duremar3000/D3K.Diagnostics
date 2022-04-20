@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
+using D3K.Diagnostics.Core;
+
 namespace D3K.Diagnostics.Common
 {
     public class ElapsedMethodLogMessageFactory : IMethodLogMessageFactory

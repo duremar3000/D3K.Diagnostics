@@ -21,11 +21,12 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, LogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
         }
 
         public static void RegisterHashCodeMethodLogInterceptor<TLogListenerFactory>(this Container container, string loggerName) where TLogListenerFactory : class, ILogListenerFactory, new()
@@ -37,11 +38,12 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateHashCodeMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
         }
 
         public static void RegisterMethodLogInterceptor(this Container container, ILogListener logListener)
@@ -52,11 +54,12 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<MethodLogInterceptor>();
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, LogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
         }
 
         public static void RegisterHashCodeMethodLogInterceptor(this Container container, ILogListener logListener)
@@ -67,11 +70,12 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<MethodLogInterceptor>();
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateHashCodeMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
         }
 
         public static void RegisterMethodLogAsyncInterceptor<TLogListenerFactory>(this Container container, string loggerName) where TLogListenerFactory : class, ILogListenerFactory, new()
@@ -83,11 +87,12 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, LogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
         }
 
         public static void RegisterHashCodeMethodLogAsyncInterceptor<TLogListenerFactory>(this Container container, string loggerName) where TLogListenerFactory : class, ILogListenerFactory, new()
@@ -99,11 +104,12 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateHashCodeMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
         }
 
         public static void RegisterMethodLogAsyncInterceptor(this Container container, ILogListener logListener)
@@ -114,11 +120,12 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<MethodLogAsyncInterceptor>();
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, LogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
         }
 
         public static void RegisterHashCodeMethodLogAsyncInterceptor(this Container container, ILogListener logListener)
@@ -129,16 +136,23 @@ namespace D3K.Diagnostics.SimpleInjector
             container.Register<MethodLogAsyncInterceptor>();
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
-            container.RegisterInitializer<Logger>(logger => logger.Attach(container.GetInstance<ILogListener>()));
+            container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
             container.Register(() => CreateHashCodeMethodLogMessageFactory(container));
             container.Register<ILogMessageSettings, HashCodeLogMessageSettings>();
             container.Register<ILogValueMapper, LogValueMapper>();
             container.Register<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>();
+            container.Register<ILogMessageFactory, LogMessageFactory>();
+        }
+
+        private static void AttachLogListener(Logger logger, ILogListener logListener)
+        {
+            logger.Detach(logListener);
+            logger.Attach(logListener);
         }
 
         private static IMethodLogMessageFactory CreateMethodLogMessageFactory(Container container)
         {
-            var methodLogMessageFactory = new MethodLogMessageFactory(container.GetInstance<ILogMessageSettings>(), container.GetInstance<ILogValueMapper>());
+            var methodLogMessageFactory = new MethodLogMessageFactory(container.GetInstance<ILogMessageSettings>(), container.GetInstance<ILogValueMapper>(), container.GetInstance<ILogMessageFactory>());
             var elapsedMethodLogMessageFactory = new ElapsedMethodLogMessageFactory { Target = methodLogMessageFactory };
 
             return elapsedMethodLogMessageFactory;
@@ -146,7 +160,7 @@ namespace D3K.Diagnostics.SimpleInjector
 
         private static IMethodLogMessageFactory CreateHashCodeMethodLogMessageFactory(Container container)
         {
-            var methodLogMessageFactory = new MethodLogMessageFactory(container.GetInstance<ILogMessageSettings>(), container.GetInstance<ILogValueMapper>());
+            var methodLogMessageFactory = new MethodLogMessageFactory(container.GetInstance<ILogMessageSettings>(), container.GetInstance<ILogValueMapper>(), container.GetInstance<ILogMessageFactory>());
             var hashCodeMethodLogMessageFactory = new HashCodeMethodLogMessageFactory { Target = methodLogMessageFactory };
             var elapsedMethodLogMessageFactory = new ElapsedMethodLogMessageFactory { Target = hashCodeMethodLogMessageFactory };
 

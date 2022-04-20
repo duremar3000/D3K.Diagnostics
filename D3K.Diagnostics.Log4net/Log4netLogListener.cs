@@ -36,7 +36,7 @@ namespace D3K.Diagnostics.Log4netExtensions
                     break;
 
                 case LogSeverity.Error:
-                    var errorMsg = CreatetMessage(e.Message, e.Exception);
+                    var errorMsg = CreatetMessage(e.Message);
                     _logger.Error(errorMsg);
                     break;
 
@@ -47,15 +47,9 @@ namespace D3K.Diagnostics.Log4netExtensions
             }
         }
 
-        private static string CreatetMessage(string message, Exception exception = null)
+        private static string CreatetMessage(ILogMessage message)
         {
-            var sb = new StringBuilder(message);
-
-            if (exception != null)
-            {
-                sb.AppendLine();
-                sb.AppendLine(exception.ToString());
-            }
+            var sb = new StringBuilder(message.ToString());
 
             return sb.ToString();
         }

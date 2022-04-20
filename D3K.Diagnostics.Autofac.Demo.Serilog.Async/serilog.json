@@ -1,0 +1,24 @@
+﻿{
+  "Serilog": {
+    "Using": [ "Serilog.Sinks.File", "Serilog.Sinks.Elasticsearch" ],
+    "MinimumLevel": "Debug",
+    "Enrich": [ "FromLogContext", "WithThreadId" ],
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs\\debug.txt",
+          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.ffff} [{pid}] [{ThreadId,-3}] [{Level:u3}] {Message:lj}{NewLine}"
+        }
+      },
+      {
+        "Name": "Elasticsearch",
+        "Args": {
+          "nodeUris": "http://localhost:9200",
+          "restrictedToMinimumLevel": "Verbose",
+          "typeName": "_doc"
+        }
+      }
+    ]
+  }
+}

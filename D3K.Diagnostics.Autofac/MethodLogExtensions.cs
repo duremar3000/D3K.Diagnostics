@@ -32,9 +32,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
 
@@ -56,9 +58,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
 
@@ -78,9 +82,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
 
@@ -101,9 +107,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
 
@@ -124,9 +132,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
 
@@ -148,9 +158,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
 
@@ -170,9 +182,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
 
@@ -193,9 +207,11 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)));
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
     }

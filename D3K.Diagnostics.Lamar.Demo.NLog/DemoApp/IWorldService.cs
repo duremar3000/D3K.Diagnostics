@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace D3K.Diagnostics.Lamar.Demo.NLog
+namespace D3K.Diagnostics.Demo
 {
     public interface IWorldService
     {
-        string GetWorld();
+        WorldModel GetWorld();
     }
 }

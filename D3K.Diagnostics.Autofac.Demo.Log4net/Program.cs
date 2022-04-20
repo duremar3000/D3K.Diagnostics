@@ -2,13 +2,9 @@
 
 using Autofac;
 using Autofac.Extras.DynamicProxy;
-using Autofac.Extensions.DependencyInjection;
 
 using D3K.Diagnostics.Log4netExtensions;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
+using D3K.Diagnostics.Demo;
 
 namespace D3K.Diagnostics.Autofac.Demo.Log4net
 {
@@ -16,30 +12,18 @@ namespace D3K.Diagnostics.Autofac.Demo.Log4net
     {
         static void Main(string[] args)
         {
-            using (var host = CreateHost(args))
+            var builder = new ContainerBuilder();
+
+            RegisterDependecies(builder);
+
+            using (var container = builder.Build())
             {
-                using (var sc = host.Services.CreateScope())
-                {
-                    var demoApp = sc.ServiceProvider.GetRequiredService<IDemoApp>();
+                var demoApp = container.Resolve<IDemoApp>();
 
-                    demoApp.Run();
+                demoApp.Run();
 
-                    Console.ReadLine();
-                }
+                Console.ReadLine();
             }
-        }
-
-        public static IHost CreateHost(string[] args)
-        {
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostBuilderContext, logging) => { logging.AddLog4Net(); })
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureContainer<ContainerBuilder>(RegisterDependecies)
-                .UseConsoleLifetime();
-
-            var host = hostBuilder.Build();
-
-            return host;
         }
 
         private static void RegisterDependecies(ContainerBuilder builder)
@@ -51,6 +35,7 @@ namespace D3K.Diagnostics.Autofac.Demo.Log4net
             builder.RegisterType<HelloWorldService>().As<IHelloWorldService>().EnableInterfaceInterceptors().InterceptedBy("pid").InterceptedBy("log");
             builder.RegisterType<HelloService>().As<IHelloService>().EnableInterfaceInterceptors().InterceptedBy("pid").InterceptedBy("log");
             builder.RegisterType<WorldService>().As<IWorldService>().EnableInterfaceInterceptors().InterceptedBy("pid").InterceptedBy("log");
+            builder.RegisterType<Printer>().As<IPrinter>().EnableInterfaceInterceptors().InterceptedBy("pid").InterceptedBy("log");
         }
     }
 }

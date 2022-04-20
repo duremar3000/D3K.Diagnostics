@@ -1,17 +1,12 @@
 ﻿using System;
 
-using Serilog;
-
 using Unity;
 using Unity.Interception;
 using Unity.Interception.ContainerIntegration;
 using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
-using Unity.Microsoft.DependencyInjection;
 
 using D3K.Diagnostics.SerilogExtensions;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using D3K.Diagnostics.Demo;
 
 namespace D3K.Diagnostics.Unity.Demo.Serilog
 {
@@ -19,32 +14,16 @@ namespace D3K.Diagnostics.Unity.Demo.Serilog
     {
         static void Main(string[] args)
         {
-            var hostBuilder = CreateHostBuilder(args);
-
-            var host = hostBuilder.Build();
-
-            using (var sc = host.Services.CreateScope())
+            using (var container = new UnityContainer())
             {
-                var demoApp = sc.ServiceProvider.GetRequiredService<IDemoApp>();
+                RegisterDependencies(container);
+
+                var demoApp = container.Resolve<IDemoApp>();
 
                 demoApp.Run();
 
                 Console.ReadLine();
             }
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            var container = new UnityContainer();
-
-            RegisterDependencies(container);
-
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostingContext, logging) => { logging.AddSerilog(dispose: true); })
-                .UseUnityServiceProvider(container)
-                .UseConsoleLifetime();
-
-            return hostBuilder;
         }
 
         private static void RegisterDependencies(IUnityContainer container)
@@ -56,14 +35,17 @@ namespace D3K.Diagnostics.Unity.Demo.Serilog
 
             container
                 .AddNewExtension<Interception>()
-
-                .RegisterMethodLogInterceptionBehavior<SerilogLogListenerFactory>("log", "Debug")
+                
                 .RegisterMethodIdentityInterceptionBehavior<SerilogLogContext>("pid", "pid")
+                .RegisterMethodLogInterceptionBehavior<XmlSerilogLogListenerFactory>("log", "Debug")
+                //.RegisterMethodLogInterceptionBehavior<JsonSerilogLogListenerFactory>("log", "Debug")
 
                 .RegisterType<IDemoApp, DemoApp>(ii, pid, log)
                 .RegisterType<IHelloWorldService, HelloWorldService>(ii, pid, log)
                 .RegisterType<IHelloService, HelloService>(ii, pid, log)
-                .RegisterType<IWorldService, WorldService>(ii, pid, log);
+                .RegisterType<IWorldService, WorldService>(ii, pid, log)
+                .RegisterType<IPrinter, Printer>(ii, pid, log)
+                ;
         }
     }
 }

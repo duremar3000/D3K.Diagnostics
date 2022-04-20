@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-using Newtonsoft.Json;
+using D3K.Diagnostics.Core;
 
 namespace D3K.Diagnostics.Common
 {
@@ -13,31 +13,37 @@ namespace D3K.Diagnostics.Common
     {
         readonly ILogMessageSettings _logMessageSettings;
         readonly ILogValueMapper _logValueMapper;
+        readonly ILogMessageFactory _logMessageFactory;
 
         public MethodLogMessageFactory(
             ILogMessageSettings logMessageSettings,
-            ILogValueMapper logValueMapper)
+            ILogValueMapper logValueMapper,
+            ILogMessageFactory logMessageFactory)
         {
             _logMessageSettings = logMessageSettings ?? throw new ArgumentNullException();
             _logValueMapper = logValueMapper ?? throw new ArgumentNullException();
+            _logMessageFactory = logMessageFactory ?? throw new ArgumentNullException();
         }
 
         public (ILogMessage logMessage, object correlationState) CreateInputMethodLogMessage(MethodInput methodInput)
         {
+            var logMessage = _logMessageFactory.CreateLogMessage(_logMessageSettings.InputLogMessageTemplate);
+
+            var methodDeclaringType = methodInput.Method.DeclaringType;
+            var methodDeclaringTypeName = ToShortName(methodDeclaringType);
+            logMessage.AddMessageProperty("MethodDeclaringTypeName", methodDeclaringTypeName);
+
             var targetType = GetTargetType(methodInput);
-
-            var logMessage = new LogMessage(_logMessageSettings.InputLogMessageTemplate);
-
             var className = ToShortName(targetType);
             logMessage.AddMessageProperty("ClassName", className);
 
             var methodName = methodInput.Method.Name;
             logMessage.AddMessageProperty("MethodName", methodName);
-            
-            var inputArgs = JsonConvert.SerializeObject(_logValueMapper.ToArgs(methodInput), JsonSettings);
+
+            var inputArgs = _logValueMapper.ToArgs(methodInput);
             logMessage.AddMessageProperty("InputArgs", inputArgs);
 
-            return (logMessage, correlationState: new CorrelationState { Input = methodInput, ClassName = className, MethodName = methodName });
+            return (logMessage, correlationState: new CorrelationState { Input = methodInput, MethodDeclaringTypeName = methodDeclaringTypeName, ClassName = className, MethodName = methodName });
         }
 
         public ILogMessage CreateOutputMethodLogMessage(MethodReturn methodReturn, object correlationState)
@@ -49,7 +55,9 @@ namespace D3K.Diagnostics.Common
         {
             if (methodReturn.Exception == null)
             {
-                var logMessage = new LogMessage(_logMessageSettings.OutputLogMessageTemplate);
+                var logMessage = _logMessageFactory.CreateLogMessage(_logMessageSettings.OutputLogMessageTemplate);
+
+                logMessage.AddMessageProperty("MethodDeclaringTypeName", correlationState.MethodDeclaringTypeName);
 
                 logMessage.AddMessageProperty("ClassName", correlationState.ClassName);
 
@@ -65,15 +73,15 @@ namespace D3K.Diagnostics.Common
                     }
                 }
 
-                var returnValue = _logValueMapper.ToJson(methodReturn.ReturnValue);
-
-                logMessage.AddMessageProperty("ReturnValue", returnValue);
+                logMessage.AddMessageProperty("ReturnValue", methodReturn.ReturnValue);
 
                 return logMessage;
             }
             else
             {
-                var logMessage = new LogMessage(_logMessageSettings.ErrorLogMessageTemplate);
+                var logMessage = _logMessageFactory.CreateLogMessage(_logMessageSettings.ErrorLogMessageTemplate);
+
+                logMessage.AddMessageProperty("MethodDeclaringTypeName", correlationState.MethodDeclaringTypeName);
 
                 logMessage.AddMessageProperty("ClassName", correlationState.ClassName);
 
@@ -88,6 +96,8 @@ namespace D3K.Diagnostics.Common
         class CorrelationState
         {
             public MethodInput Input { get; set; }
+
+            public string MethodDeclaringTypeName { get; set; }
 
             public string ClassName { get; set; }
 

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 
 using D3K.Diagnostics.Core;
-using D3K.Diagnostics.Log4netExtensions;
+
+using log4net;
+using log4net.Config;
 
 namespace D3K.Diagnostics.Log4netExtensions
 {
@@ -17,7 +20,14 @@ namespace D3K.Diagnostics.Log4netExtensions
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            var log = log4net.LogManager.GetLogger(_entryAssembly, loggerName);
+            var loggerRepository = LogManager.GetRepository(_entryAssembly);
+
+            if (!loggerRepository.Configured)
+            {
+                XmlConfigurator.Configure(loggerRepository, new FileInfo("log4net.config"));
+            }
+
+            var log = LogManager.GetLogger(_entryAssembly, loggerName);
 
             return new Log4netLogListener(log);
         }

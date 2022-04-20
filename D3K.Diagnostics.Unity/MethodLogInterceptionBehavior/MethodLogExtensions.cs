@@ -27,9 +27,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterType<ILogListenerFactory, TLogListenerFactory>(name)
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, LogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;
@@ -50,9 +51,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory")))
                 .RegisterType<IMethodLogMessageFactory, HashCodeMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory", new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, HashCodeLogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;
@@ -71,9 +73,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, LogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;
@@ -93,9 +96,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory")))
                 .RegisterType<IMethodLogMessageFactory, HashCodeMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory", new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, HashCodeLogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;
@@ -115,9 +119,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterType<ILogListenerFactory, TLogListenerFactory>(name)
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, LogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;
@@ -138,9 +143,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory")))
                 .RegisterType<IMethodLogMessageFactory, HashCodeMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory", new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, HashCodeLogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;
@@ -159,9 +165,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, LogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;
@@ -181,9 +188,10 @@ namespace D3K.Diagnostics.Unity
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory")))
                 .RegisterType<IMethodLogMessageFactory, HashCodeMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory", new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
-                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name)))
+                .RegisterType<IMethodLogMessageFactory, MethodLogMessageFactory>($"{name}MethodLogMessageFactory", new InjectionConstructor(new ResolvedParameter<ILogMessageSettings>(name), new ResolvedParameter<ILogValueMapper>(name), new ResolvedParameter<ILogMessageFactory>(name)))
                 .RegisterType<ILogMessageSettings, HashCodeLogMessageSettings>(name)
                 .RegisterType<ILogValueMapper, LogValueMapper>(name, new InjectionConstructor(new ResolvedParameter<ILogValueMapperConfigurator>(name)))
+                .RegisterType<ILogMessageFactory, LogMessageFactory>(name)
                 .RegisterType<ILogValueMapperConfigurator, DefaultLogValueMapperConfigurator>(name);
 
             return container;

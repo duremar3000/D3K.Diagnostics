@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace D3K.Diagnostics.Ninject.Demo.NLog
+namespace D3K.Diagnostics.Demo
 {
     public class HelloService : IHelloService
     {
-        public string GetHello()
-        {
-            return "Hello";
+        public HelloModel GetHello()
+        {            
+            return new HelloModel();
         }
     }
 }

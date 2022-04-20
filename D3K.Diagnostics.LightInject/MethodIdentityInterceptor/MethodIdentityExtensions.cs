@@ -19,9 +19,13 @@ namespace D3K.Diagnostics.LightInject
 
             if (string.IsNullOrEmpty(methodIdentityKey))
                 throw new ArgumentException();
+            
+            container.Register<IInterceptor, MethodIdentityInterceptor>(name);
+            container.RegisterConstructorDependency((sf, pi) => methodIdentityKey);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodIdentityProvider>(name));
 
-            container.Register<IInterceptor>(sf => new MethodIdentityInterceptor(methodIdentityKey, sf.GetInstance<IMethodIdentityProvider>(name)), name);
             container.Register<IMethodIdentityProvider, MethodIdentityProvider>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogContext>(name));
             container.Register<ILogContext, TLogContext>(name);
         }
 
@@ -33,8 +37,12 @@ namespace D3K.Diagnostics.LightInject
             if (string.IsNullOrEmpty(methodIdentityKey))
                 throw new ArgumentException();
 
-            container.Register<IInterceptor>(sf => new MethodIdentityAsyncInterceptor(methodIdentityKey, sf.GetInstance<IMethodIdentityProvider>(name)), name);
+            container.Register<IInterceptor, MethodIdentityAsyncInterceptor>(name);
+            container.RegisterConstructorDependency((sf, pi) => methodIdentityKey);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodIdentityProvider>(name));
+
             container.Register<IMethodIdentityProvider, MethodIdentityProvider>(name);
+            container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogContext>(name));
             container.Register<ILogContext, TLogContext>(name);
         }
     }

@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace D3K.Diagnostics.Windsor.Demo.NLog.Async
+namespace D3K.Diagnostics.Demo
 {
     public class HelloWorldService : IHelloWorldService
     {
@@ -17,17 +17,19 @@ namespace D3K.Diagnostics.Windsor.Demo.NLog.Async
             _worldService = worldService;
         }
 
-        public async Task<string> GetHelloWorld()
+        public async Task<HelloWorldModel> GetHelloWorld()
         {
             var helloTask = _helloService.GetHello();
 
             var worldTask = _worldService.GetWorld();
 
-            var helloWorld = await Task.WhenAll(new[] { helloTask, worldTask });
-            
-            var res = string.Concat(helloWorld);
+            await Task.WhenAll(helloTask, worldTask);
 
-            return res;                 
+            var hello = await helloTask;
+
+            var world = await worldTask;
+
+            return new HelloWorldModel { Hello = hello, World = world };
         }
     }
 }

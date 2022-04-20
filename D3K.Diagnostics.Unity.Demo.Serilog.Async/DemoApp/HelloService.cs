@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace D3K.Diagnostics.Unity.Demo.Serilog.Async
+namespace D3K.Diagnostics.Demo
 {
     public class HelloService : IHelloService
     {
-        public async Task<string> GetHello()
+        public async Task<HelloModel> GetHello()
         {
             await Task.Delay(5000);
 
-            return "Hello";
+            return new HelloModel();
         }
     }
 }

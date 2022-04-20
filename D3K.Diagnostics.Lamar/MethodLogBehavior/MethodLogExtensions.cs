@@ -27,10 +27,14 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogger>().Add(sc => CreateLogger(sc.GetInstance<ILogListener>(name))).Named(name);            
             serviceRegistry.For<ILogListenerFactory>().Use<TLogListenerFactory>().Named(name);
             serviceRegistry.For<ILogListener>().Use(sc=>sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>("Target").IsNamedInstance($"{name}MethodLogMessageFactory");
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 
@@ -51,9 +55,13 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(sc => sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 
@@ -72,9 +80,13 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogger>().Add(sc => CreateLogger(sc.GetInstance<ILogListener>(name))).Named(name);
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 
@@ -94,9 +106,13 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 
@@ -116,9 +132,13 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListenerFactory>().Use<TLogListenerFactory>().Named(name);
             serviceRegistry.For<ILogListener>().Use(sc => sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 
@@ -139,9 +159,13 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(sc => sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 
@@ -160,9 +184,13 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogger>().Add(sc => CreateLogger(sc.GetInstance<ILogListener>(name))).Named(name);
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 
@@ -182,9 +210,13 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>();
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
+                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
+                .Ctor<ILogValueMapper>().IsNamedInstance(name)
+                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
 

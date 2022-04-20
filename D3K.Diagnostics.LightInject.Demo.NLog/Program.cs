@@ -1,15 +1,10 @@
 ﻿using System;
 
-using NLog.Extensions.Logging;
+using D3K.Diagnostics.Demo;
+using D3K.Diagnostics.NLogExtensions;
 
 using LightInject;
 using LightInject.Interception;
-using LightInject.Microsoft.DependencyInjection;
-
-using D3K.Diagnostics.NLogExtensions;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace D3K.Diagnostics.LightInject.Demo.NLog
 {
@@ -17,30 +12,16 @@ namespace D3K.Diagnostics.LightInject.Demo.NLog
     {
         static void Main(string[] args)
         {
-            using (var host = CreateHost(args))
+            using (var container = new ServiceContainer())
             {
-                using (var sc = host.Services.CreateScope())
-                {
-                    var demoApp = sc.ServiceProvider.GetRequiredService<IDemoApp>();
+                RegisterDependecies(container);
 
-                    demoApp.Run();
+                var demoApp = container.GetInstance<IDemoApp>();
 
-                    Console.ReadLine();
-                }
+                demoApp.Run();
+
+                Console.ReadLine();
             }
-        }
-
-        public static IHost CreateHost(string[] args)
-        {
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostBuilderContext, logging) => { logging.AddNLog(); })
-                .UseServiceProviderFactory(new LightInjectServiceProviderFactory(options => options.EnablePropertyInjection = true))
-                .ConfigureContainer<IServiceContainer>(RegisterDependecies)
-                .UseConsoleLifetime();
-
-            var host = hostBuilder.Build();
-
-            return host;
         }
 
         private static void RegisterDependecies(IServiceContainer container)
@@ -54,6 +35,7 @@ namespace D3K.Diagnostics.LightInject.Demo.NLog
             container.Register<IHelloWorldService, HelloWorldService>();
             container.Register<IHelloService, HelloService>();
             container.Register<IWorldService, WorldService>();
+            container.Register<IPrinter, Printer>();
         }
 
         private static bool InterceptPredicate(ServiceRegistration serviceRegistration)
@@ -63,7 +45,7 @@ namespace D3K.Diagnostics.LightInject.Demo.NLog
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.LightInject.Demo.NLog";
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.Demo";
         }
 
         private static void DefineProxyType(IServiceFactory serviceFactory, ProxyDefinition proxyDefinition)

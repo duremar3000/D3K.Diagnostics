@@ -4,14 +4,10 @@ using System.Threading.Tasks;
 
 using SimpleInjector;
 using SimpleInjector.InterceptorExtensions;
-using SimpleInjector.Lifestyles;
 
 using D3K.Diagnostics.Castle;
 using D3K.Diagnostics.Log4netExtensions;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
+using D3K.Diagnostics.Demo;
 
 namespace D3K.Diagnostics.SimpleInjector.Demo.Log4net.Async
 {
@@ -19,31 +15,18 @@ namespace D3K.Diagnostics.SimpleInjector.Demo.Log4net.Async
     {
         static void Main(string[] args)
         {
-            using (var host = CreateHost(args))
+            using (var container = new Container())
             {
-                host.RunAsync();
+                container.Options.AllowOverridingRegistrations = true;
+
+                RegisterDependencies(container);
+
+                var demoApp = container.GetInstance<IDemoApp>();
+
+                demoApp.RunAsync();
 
                 Console.ReadLine();
             }
-        }
-
-        public static IHost CreateHost(string[] args)
-        {
-            var container = new Container();
-
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-
-            RegisterDependencies(container);
-
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostBuilderContext, logging) => { logging.AddLog4Net(); })
-                .ConfigureServices((hostBuilderContext, services) => { services.AddSimpleInjector(container, options => { options.AddHostedService<DemoHostedService>(); }); })
-                .UseConsoleLifetime();
-
-            var host = hostBuilder.Build()
-                .UseSimpleInjector(container);
-
-            return host;
         }
 
         private static void RegisterDependencies(Container container)
@@ -58,33 +41,25 @@ namespace D3K.Diagnostics.SimpleInjector.Demo.Log4net.Async
 
             container.InterceptWith<MethodLogAsyncInterceptor>(InterceptPredicate);
             container.InterceptWith<MethodIdentityAsyncInterceptor>(InterceptPredicate);
+
+
+            container.RegisterMethodIdentityInterceptor<Log4netLogContext>("syncPid");
+            container.RegisterMethodLogInterceptor<Log4netLogListenerFactory>("Debug");
+
+            container.Register<IPrinter, Printer>();
+
+            container.InterceptWith<MethodLogInterceptor>(SyncInterceptPredicate);
+            container.InterceptWith<MethodIdentityInterceptor>(SyncInterceptPredicate);
         }
 
         private static bool InterceptPredicate(Type type)
         {
-            return type.IsInterface && type.Namespace == "D3K.Diagnostics.SimpleInjector.Demo.Log4net.Async";
-        }
-    }
-
-    public class DemoHostedService : IHostedService
-    {
-        readonly Container _container;
-
-        public DemoHostedService(Container container)
-        {
-            _container = container;
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.Demo" && type!=typeof(IPrinter);
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        private static bool SyncInterceptPredicate(Type type)
         {
-            var demoApp = _container.GetInstance<IDemoApp>();
-
-            await demoApp.RunAsync();
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            return type.IsInterface && type.Namespace == "D3K.Diagnostics.Demo" && type == typeof(IPrinter);
         }
     }
 }

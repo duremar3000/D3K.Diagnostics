@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 
 using Newtonsoft.Json;
 
@@ -50,7 +52,7 @@ namespace D3K.Diagnostics.Common
             return res;
         }
 
-        public static object[] ToArgs(this ILogValueMapper logValueMapper, MethodInput input)
+        public static object ToArgs(this ILogValueMapper logValueMapper, MethodInput input)
         {
             if (input == null)
                 throw new ArgumentNullException();
@@ -62,16 +64,18 @@ namespace D3K.Diagnostics.Common
                     Value = logValueMapper.Map(input.Arguments[i.Position])
                 });
 
-            return args.ToArray();
-        }
+            var properties = args.Select(i => new DynamicProperty(i.Name, typeof(object))).ToArray();
 
-        public static string ToJson(this ILogValueMapper logValueMapper, object traceValue)
-        {
-            var targetTraceValue = logValueMapper.Map(traceValue);
+            var type = DynamicClassFactory.CreateType(properties);
 
-            var json = JsonConvert.SerializeObject(targetTraceValue, JsonSettings);
+            var obj = Activator.CreateInstance(type) as DynamicClass;
 
-            return json;
+            foreach (var arg in args)
+            {
+                obj.SetDynamicPropertyValue(arg.Name, arg.Value);
+            }
+
+            return obj;
         }
     }
 }

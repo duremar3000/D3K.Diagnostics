@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>4.1.0</Version>
+    <Version>5.0.0</Version>
     <Company>D3K</Company>
     <Description>D3K.Diagnostics.Lamar</Description>
     <Authors>duremar3000</Authors>
-    <Copyright>Copyright 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/duremar3000/D3K.Diagnostics</PackageProjectUrl>
-    <PackageTags>log logging log4net nlog serilog autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
+    <PackageTags>log structured logging log4net nlog serilog elasticsearch autofac unity windsor ninject simpleinjector lightinject lamar interceptor interception</PackageTags>
+    <Copyright>Copyright 2022</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

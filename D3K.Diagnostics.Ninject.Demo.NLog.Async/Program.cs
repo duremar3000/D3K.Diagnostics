@@ -2,16 +2,12 @@
 using System.Threading.Tasks;
 using System.Threading;
 
-using NLog.Extensions.Logging;
-
 using Ninject;
 using Ninject.Extensions.Interception;
 using Ninject.Extensions.Interception.Infrastructure.Language;
 
 using D3K.Diagnostics.NLogExtensions;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using D3K.Diagnostics.Demo;
 
 namespace D3K.Diagnostics.Ninject.Demo.NLog.Async
 {
@@ -19,32 +15,16 @@ namespace D3K.Diagnostics.Ninject.Demo.NLog.Async
     {
         static void Main(string[] args)
         {
-            using (var host = CreateHost(args))
+            using (var kernel = new StandardKernel())
             {
-                host.RunAsync();
+                RegisterDependecies(kernel);
+
+                var demoApp = kernel.Get<IDemoApp>();
+
+                demoApp.RunAsync();
 
                 Console.ReadLine();
             }
-        }
-
-        public static IHost CreateHost(string[] args)
-        {
-            var kernel = new StandardKernel();
-
-            RegisterDependecies(kernel);
-
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostingContext, logging) => { logging.AddNLog(); })
-                .ConfigureServices((hostBuilderContext, services) =>
-                {
-                    services.AddScoped<IKernel, StandardKernel>(serviceProvider => kernel);
-                    services.AddHostedService<DemoHostedService>();
-                })
-                .UseConsoleLifetime();
-
-            var host = hostBuilder.Build();
-
-            return host;
         }
 
         private static void RegisterDependecies(IKernel kernel)
@@ -52,8 +32,14 @@ namespace D3K.Diagnostics.Ninject.Demo.NLog.Async
             kernel.RegisterMethodIdentityAsyncInterceptor<NLogLogContext>("pid", "pid");
             kernel.RegisterMethodLogAsyncInterceptor<NLogLogListenerFactory>("log", "Debug");
 
+            kernel.RegisterMethodIdentityInterceptor<NLogLogContext>("syncPid", "pid");
+            kernel.RegisterMethodLogInterceptor<NLogLogListenerFactory>("syncLog", "Debug");
+
             var log = kernel.Get<IInterceptor>("log");
             var pid = kernel.Get<IInterceptor>("pid");
+
+            var syncLog = kernel.Get<IInterceptor>("syncLog");
+            var syncPid = kernel.Get<IInterceptor>("syncPid");
 
             var demoAppBinding = kernel.Bind<IDemoApp>().To<DemoApp>();
             demoAppBinding.Intercept().With(pid);
@@ -70,28 +56,10 @@ namespace D3K.Diagnostics.Ninject.Demo.NLog.Async
             var worldServiceBinding = kernel.Bind<IWorldService>().To<WorldService>();
             worldServiceBinding.Intercept().With(pid);
             worldServiceBinding.Intercept().With(log);
-        }
-    }
 
-    public class DemoHostedService : IHostedService
-    {
-        readonly IKernel _kernel;
-
-        public DemoHostedService(IKernel kernel)
-        {
-            _kernel = kernel;
-        }
-
-        public async Task StartAsync(CancellationToken cancellationToken)
-        {
-            var demoApp = _kernel.Get<IDemoApp>();
-
-            await demoApp.RunAsync();
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            var printerBinding = kernel.Bind<IPrinter>().To<Printer>();
+            printerBinding.Intercept().With(syncPid);
+            printerBinding.Intercept().With(syncLog);
         }
     }
 }

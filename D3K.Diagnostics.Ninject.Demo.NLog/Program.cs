@@ -2,16 +2,12 @@
 using System.Threading.Tasks;
 using System.Threading;
 
-using NLog.Extensions.Logging;
-
 using Ninject;
 using Ninject.Extensions.Interception;
 using Ninject.Extensions.Interception.Infrastructure.Language;
 
 using D3K.Diagnostics.NLogExtensions;
-
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using D3K.Diagnostics.Demo;
 
 namespace D3K.Diagnostics.Ninject.Demo.NLog
 {
@@ -19,32 +15,16 @@ namespace D3K.Diagnostics.Ninject.Demo.NLog
     {
         static void Main(string[] args)
         {
-            using (var host = CreateHost(args))
+            using (var kernel = new StandardKernel())
             {
-                host.RunAsync();
+                RegisterDependecies(kernel);
+
+                var demoApp = kernel.Get<IDemoApp>();
+
+                demoApp.Run();
 
                 Console.ReadLine();
             }
-        }
-
-        public static IHost CreateHost(string[] args)
-        {
-            var kernel = new StandardKernel();
-
-            RegisterDependecies(kernel);
-
-            var hostBuilder = Host.CreateDefaultBuilder(args)
-                .ConfigureLogging((hostingContext, logging) => { logging.AddNLog(); })
-                .ConfigureServices((hostBuilderContext, services) =>
-                {
-                    services.AddScoped<IKernel, StandardKernel>(serviceProvider => kernel);
-                    services.AddHostedService<DemoHostedService>();
-                })
-                .UseConsoleLifetime();
-
-            var host = hostBuilder.Build();
-
-            return host;
         }
 
         private static void RegisterDependecies(IKernel kernel)
@@ -57,11 +37,11 @@ namespace D3K.Diagnostics.Ninject.Demo.NLog
 
             var demoAppBinding = kernel.Bind<IDemoApp>().To<DemoApp>();
             demoAppBinding.Intercept().With(pid);
-            demoAppBinding.Intercept().With(log);            
+            demoAppBinding.Intercept().With(log);
 
             var helloWorldServiceBinding = kernel.Bind<IHelloWorldService>().To<HelloWorldService>();
             helloWorldServiceBinding.Intercept().With(pid);
-            helloWorldServiceBinding.Intercept().With(log);            
+            helloWorldServiceBinding.Intercept().With(log);
 
             var helloServiceBinding = kernel.Bind<IHelloService>().To<HelloService>();
             helloServiceBinding.Intercept().With(pid);
@@ -69,31 +49,11 @@ namespace D3K.Diagnostics.Ninject.Demo.NLog
 
             var worldServiceBinding = kernel.Bind<IWorldService>().To<WorldService>();
             worldServiceBinding.Intercept().With(pid);
-            worldServiceBinding.Intercept().With(log);            
-        }
-    }
+            worldServiceBinding.Intercept().With(log);
 
-    public class DemoHostedService : IHostedService
-    {
-        readonly IKernel _kernel;
-
-        public DemoHostedService(IKernel kernel)
-        {
-            _kernel = kernel;
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            var demoApp = _kernel.Get<IDemoApp>();
-
-            demoApp.Run();
-
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            var printerBinding = kernel.Bind<IPrinter>().To<Printer>();
+            printerBinding.Intercept().With(pid);
+            printerBinding.Intercept().With(log);
         }
     }
 }

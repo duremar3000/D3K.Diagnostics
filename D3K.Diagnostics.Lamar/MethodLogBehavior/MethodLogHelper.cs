@@ -17,7 +17,7 @@ namespace D3K.Diagnostics.Lamar
             return new MethodInput
             {
                 Method = input.MethodInfo,
-                Arguments = input.Arguments.Cast<object>().ToArray(),
+                Arguments = input.Arguments.Cast<IArgument>().Select(i => i.Value).ToArray(),
                 Target = input.TargetInstance,
                 TargetType = input.TargetInstance.GetType(),
             };

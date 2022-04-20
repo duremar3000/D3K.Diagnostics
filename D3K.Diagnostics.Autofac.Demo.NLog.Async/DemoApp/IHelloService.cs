@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace D3K.Diagnostics.Autofac.Demo.NLog.Async
+namespace D3K.Diagnostics.Demo
 {
     public interface IHelloService
     {
-        Task<string> GetHello();
+        Task<HelloModel> GetHello();
     }
 }

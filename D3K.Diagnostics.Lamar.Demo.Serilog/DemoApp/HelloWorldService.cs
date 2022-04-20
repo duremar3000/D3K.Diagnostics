@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace D3K.Diagnostics.Lamar.Demo.Serilog
+namespace D3K.Diagnostics.Demo
 {
     public class HelloWorldService : IHelloWorldService
     {
@@ -17,13 +17,13 @@ namespace D3K.Diagnostics.Lamar.Demo.Serilog
             _worldService = worldService;
         }
 
-        public string GetHelloWorld()
+        public HelloWorldModel GetHelloWorld()
         {
-            var hello = _helloService.GetHello();
-
-            var world = _worldService.GetWorld();           
-
-            return hello + world;
+            return new HelloWorldModel
+            {
+                Hello = _helloService.GetHello(),
+                World = _worldService.GetWorld()
+            };
         }
     }
 }

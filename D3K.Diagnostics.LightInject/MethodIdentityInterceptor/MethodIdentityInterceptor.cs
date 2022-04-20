@@ -6,7 +6,6 @@ using System.Text;
 using LightInject.Interception;
 
 using D3K.Diagnostics.Common;
-using D3K.Diagnostics.Core;
 
 namespace D3K.Diagnostics.LightInject
 {
