@@ -22,7 +22,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentException();
 
             container
-                .RegisterType<MethodLogInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterType<ILogListenerFactory, TLogListenerFactory>(name)
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
@@ -45,7 +45,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentException();
 
             container
-                .RegisterType<MethodLogInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterType<ILogListenerFactory, TLogListenerFactory>(name)
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
@@ -69,7 +69,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentNullException();
 
             container
-                .RegisterType<MethodLogInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
@@ -91,7 +91,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentNullException();
 
             container
-                .RegisterType<MethodLogInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory")))
@@ -114,7 +114,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentException();
 
             container
-                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterType<ILogListenerFactory, TLogListenerFactory>(name)
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
@@ -137,7 +137,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentException();
 
             container
-                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterType<ILogListenerFactory, TLogListenerFactory>(name)
                 .RegisterFactory<ILogListener>(name, c => c.Resolve<ILogListenerFactory>(name).CreateLogListener(loggerName), new ContainerControlledLifetimeManager())
@@ -161,7 +161,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentNullException();
 
             container
-                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")))
@@ -183,7 +183,7 @@ namespace D3K.Diagnostics.Unity
                 throw new ArgumentNullException();
 
             container
-                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
+                .RegisterType<MethodLogAsyncInterceptionBehavior>(name, new ContainerControlledLifetimeManager(), new InjectionConstructor(new ResolvedParameter<ILogger>(name), new ResolvedParameter<IMethodLogMessageFactory>(name)))
                 .RegisterType<ILogger, Logger>(name, new InjectionMethod(nameof(Logger.Attach), new ResolvedParameter<ILogListener>(name)))
                 .RegisterInstance(name, logListener, new ContainerControlledLifetimeManager())
                 .RegisterType<IMethodLogMessageFactory, ElapsedMethodLogMessageFactory>(name, new InjectionProperty("Target", new ResolvedParameter<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory")))

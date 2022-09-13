@@ -22,7 +22,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListenerFactory>().ImplementedBy<TLogListenerFactory>().Named($"{name}LogListenerFactory"),
                 Component.For<ILogListener>().UsingFactoryMethod(kernel => kernel.Resolve<ILogListenerFactory>($"{name}LogListenerFactory").CreateLogListener(loggerName)).Named($"{name}LogListener").LifestyleSingleton(),
@@ -43,7 +43,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListenerFactory>().ImplementedBy<TLogListenerFactory>().Named($"{name}LogListenerFactory"),
                 Component.For<ILogListener>().UsingFactoryMethod(kernel => kernel.Resolve<ILogListenerFactory>($"{name}LogListenerFactory").CreateLogListener(loggerName)).Named($"{name}LogListener").LifestyleSingleton(),
@@ -65,7 +65,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListener>().Instance(logListener).Named($"{name}LogListener").LifestyleSingleton(),
                 Component.For<IMethodLogMessageFactory>().ImplementedBy<ElapsedMethodLogMessageFactory>().Named($"{name}ElapsedMethodLogMessageFactory").DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}MethodLogMessageFactory")),
@@ -85,7 +85,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListener>().Instance(logListener).Named($"{name}LogListener").LifestyleSingleton(),
                 Component.For<IMethodLogMessageFactory>().ImplementedBy<ElapsedMethodLogMessageFactory>().Named($"{name}ElapsedMethodLogMessageFactory").DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}HashCodeMethodLogMessageFactory")),
@@ -106,7 +106,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogAsyncInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogAsyncInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListenerFactory>().ImplementedBy<TLogListenerFactory>().Named($"{name}LogListenerFactory"),
                 Component.For<ILogListener>().UsingFactoryMethod(kernel => kernel.Resolve<ILogListenerFactory>($"{name}LogListenerFactory").CreateLogListener(loggerName)).Named($"{name}LogListener").LifestyleSingleton(),
@@ -127,7 +127,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogAsyncInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogAsyncInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListenerFactory>().ImplementedBy<TLogListenerFactory>().Named($"{name}LogListenerFactory"),
                 Component.For<ILogListener>().UsingFactoryMethod(kernel => kernel.Resolve<ILogListenerFactory>($"{name}LogListenerFactory").CreateLogListener(loggerName)).Named($"{name}LogListener").LifestyleSingleton(),
@@ -149,7 +149,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogAsyncInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogAsyncInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListener>().Instance(logListener).Named($"{name}LogListener").LifestyleSingleton(),
                 Component.For<IMethodLogMessageFactory>().ImplementedBy<ElapsedMethodLogMessageFactory>().Named($"{name}ElapsedMethodLogMessageFactory").DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}MethodLogMessageFactory")),
@@ -169,7 +169,7 @@ namespace D3K.Diagnostics.Windsor
                 throw new ArgumentException();
 
             container.Register(
-                Component.For<MethodLogAsyncInterceptor>().Named(name).DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
+                Component.For<MethodLogAsyncInterceptor>().Named(name).LifestyleSingleton().DependsOn(ServiceOverride.ForKey<ILogger>().Eq($"{name}Logger")).DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}ElapsedMethodLogMessageFactory")),
                 Component.For<ILogger>().UsingFactoryMethod(kernel => CreateLogger(kernel, $"{name}LogListener")).Named($"{name}Logger"),
                 Component.For<ILogListener>().Instance(logListener).Named($"{name}LogListener").LifestyleSingleton(),
                 Component.For<IMethodLogMessageFactory>().ImplementedBy<ElapsedMethodLogMessageFactory>().Named($"{name}ElapsedMethodLogMessageFactory").DependsOn(ServiceOverride.ForKey<IMethodLogMessageFactory>().Eq($"{name}HashCodeMethodLogMessageFactory")),

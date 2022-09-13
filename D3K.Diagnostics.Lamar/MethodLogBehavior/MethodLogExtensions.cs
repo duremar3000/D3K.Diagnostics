@@ -20,7 +20,7 @@ namespace D3K.Diagnostics.Lamar
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
@@ -46,7 +46,7 @@ namespace D3K.Diagnostics.Lamar
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
@@ -73,7 +73,7 @@ namespace D3K.Diagnostics.Lamar
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
@@ -98,7 +98,7 @@ namespace D3K.Diagnostics.Lamar
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
@@ -124,7 +124,7 @@ namespace D3K.Diagnostics.Lamar
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
@@ -150,7 +150,7 @@ namespace D3K.Diagnostics.Lamar
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
@@ -177,7 +177,7 @@ namespace D3K.Diagnostics.Lamar
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
@@ -202,7 +202,7 @@ namespace D3K.Diagnostics.Lamar
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Named(name)
+            serviceRegistry.For<IInterceptionBehavior>().Use<MethodLogAsyncBehavior>().Singleton().Named(name)
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 

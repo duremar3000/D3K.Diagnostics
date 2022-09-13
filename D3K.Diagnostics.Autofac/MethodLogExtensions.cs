@@ -23,7 +23,7 @@ namespace D3K.Diagnostics.Autofac
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));
@@ -48,7 +48,7 @@ namespace D3K.Diagnostics.Autofac
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));
@@ -74,7 +74,7 @@ namespace D3K.Diagnostics.Autofac
             if (logListener == null)
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));
@@ -98,7 +98,7 @@ namespace D3K.Diagnostics.Autofac
             if (logListener == null)
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));
@@ -123,7 +123,7 @@ namespace D3K.Diagnostics.Autofac
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));
@@ -148,7 +148,7 @@ namespace D3K.Diagnostics.Autofac
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));
@@ -174,7 +174,7 @@ namespace D3K.Diagnostics.Autofac
             if (logListener == null)
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));
@@ -198,7 +198,7 @@ namespace D3K.Diagnostics.Autofac
             if (logListener == null)
                 throw new ArgumentException();
 
-            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name)
+            builder.RegisterType<MethodLogAsyncInterceptor>().Named<IInterceptor>(name).SingleInstance()
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logger" && pi.ParameterType == typeof(ILogger), (pi, ctx) => ctx.ResolveNamed<ILogger>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "methodLogMessageFactory" && pi.ParameterType == typeof(IMethodLogMessageFactory), (pi, ctx) => ctx.ResolveNamed<IMethodLogMessageFactory>(name)));
             builder.RegisterType<Logger>().Named<ILogger>(name).OnActivating(e => e.Instance.Attach(e.Context.ResolveNamed<ILogListener>(name)));

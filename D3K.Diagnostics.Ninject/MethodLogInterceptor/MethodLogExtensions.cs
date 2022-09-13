@@ -20,7 +20,7 @@ namespace D3K.Diagnostics.Ninject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListenerFactory>().To<TLogListenerFactory>().Named(name);
@@ -41,7 +41,7 @@ namespace D3K.Diagnostics.Ninject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListenerFactory>().To<TLogListenerFactory>().Named(name);
@@ -63,7 +63,7 @@ namespace D3K.Diagnostics.Ninject
             if (logListener == null)
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListener>().ToConstant(logListener).InSingletonScope().Named(name);
@@ -83,7 +83,7 @@ namespace D3K.Diagnostics.Ninject
             if (logListener == null)
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListener>().ToConstant(logListener).InSingletonScope().Named(name);
@@ -104,7 +104,7 @@ namespace D3K.Diagnostics.Ninject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListenerFactory>().To<TLogListenerFactory>().Named(name);
@@ -125,7 +125,7 @@ namespace D3K.Diagnostics.Ninject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListenerFactory>().To<TLogListenerFactory>().Named(name);
@@ -147,7 +147,7 @@ namespace D3K.Diagnostics.Ninject
             if (logListener == null)
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListener>().ToConstant(logListener).InSingletonScope().Named(name);
@@ -167,7 +167,7 @@ namespace D3K.Diagnostics.Ninject
             if (logListener == null)
                 throw new ArgumentException();
 
-            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().Named(name);
+            kernel.Bind<IInterceptor>().To<MethodLogAsyncInterceptor>().InSingletonScope().Named(name);
 
             kernel.Bind<ILogger>().To<Logger>().WhenParentNamed(name).Named(name).OnActivation<Logger>((ctx, imp) => imp.Attach(ctx.Kernel.Get<ILogListener>(name)));
             kernel.Bind<ILogListener>().ToConstant(logListener).InSingletonScope().Named(name);

@@ -20,7 +20,7 @@ namespace D3K.Diagnostics.LightInject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<IInterceptor, MethodLogInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 
@@ -49,7 +49,7 @@ namespace D3K.Diagnostics.LightInject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<IInterceptor, MethodLogInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 
@@ -79,7 +79,7 @@ namespace D3K.Diagnostics.LightInject
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            container.Register<IInterceptor, MethodLogInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 
@@ -107,7 +107,7 @@ namespace D3K.Diagnostics.LightInject
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            container.Register<IInterceptor, MethodLogInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 
@@ -136,7 +136,7 @@ namespace D3K.Diagnostics.LightInject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<IInterceptor, MethodLogAsyncInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogAsyncInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 
@@ -165,7 +165,7 @@ namespace D3K.Diagnostics.LightInject
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<IInterceptor, MethodLogAsyncInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogAsyncInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 
@@ -195,7 +195,7 @@ namespace D3K.Diagnostics.LightInject
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            container.Register<IInterceptor, MethodLogAsyncInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogAsyncInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 
@@ -223,7 +223,7 @@ namespace D3K.Diagnostics.LightInject
             if (logListener == null)
                 throw new ArgumentNullException();
 
-            container.Register<IInterceptor, MethodLogAsyncInterceptor>(name);
+            container.RegisterSingleton<IInterceptor, MethodLogAsyncInterceptor>(name);
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<ILogger>(name));
             container.RegisterConstructorDependency((sf, pi) => sf.GetInstance<IMethodLogMessageFactory>(name));
 

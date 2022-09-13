@@ -17,7 +17,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<MethodLogInterceptor>();
+            container.Register<MethodLogInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
@@ -34,7 +34,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<MethodLogInterceptor>();
+            container.Register<MethodLogInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
@@ -51,7 +51,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (logListener == null)
                 throw new ArgumentException();
 
-            container.Register<MethodLogInterceptor>();
+            container.Register<MethodLogInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
             container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
@@ -67,7 +67,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (logListener == null)
                 throw new ArgumentException();
 
-            container.Register<MethodLogInterceptor>();
+            container.Register<MethodLogInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
             container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
@@ -83,7 +83,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<MethodLogAsyncInterceptor>();
+            container.Register<MethodLogAsyncInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
@@ -100,7 +100,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (string.IsNullOrEmpty(loggerName))
                 throw new ArgumentException();
 
-            container.Register<MethodLogAsyncInterceptor>();
+            container.Register<MethodLogAsyncInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.Register<ILogListenerFactory, TLogListenerFactory>();
             container.RegisterSingleton(() => container.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName));
@@ -117,7 +117,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (logListener == null)
                 throw new ArgumentException();
 
-            container.Register<MethodLogAsyncInterceptor>();
+            container.Register<MethodLogAsyncInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
             container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
@@ -133,7 +133,7 @@ namespace D3K.Diagnostics.SimpleInjector
             if (logListener == null)
                 throw new ArgumentException();
 
-            container.Register<MethodLogAsyncInterceptor>();
+            container.Register<MethodLogAsyncInterceptor>(Lifestyle.Singleton);
             container.Register<ILogger, Logger>();
             container.RegisterSingleton(() => logListener);
             container.RegisterInitializer<Logger>(logger => AttachLogListener(logger, container.GetInstance<ILogListener>()));
