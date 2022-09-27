@@ -28,7 +28,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<ElapsedMethodLogMessageFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
@@ -50,7 +56,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
@@ -70,7 +82,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<ElapsedMethodLogMessageFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
@@ -91,7 +109,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
@@ -112,7 +136,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<ElapsedMethodLogMessageFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
@@ -134,7 +164,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
@@ -154,7 +190,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<ElapsedMethodLogMessageFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<LogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }
@@ -175,7 +217,13 @@ namespace D3K.Diagnostics.Ninject
             kernel.Bind<IMethodLogMessageFactory>().To<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").WithPropertyValue("Target", ctx => ctx.Kernel.Get<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             kernel.Bind<IMethodLogMessageFactory>().To<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory");
             kernel.Bind<ILogMessageSettings>().To<HashCodeLogMessageSettings>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
-            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<IArgListObjectMapper>().To<ArgListObjectMapper>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
+            kernel.Bind<ILogValueMapper>().To<LogValueMapper>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectFactory>().To<DynamicArgListObjectFactory>().WhenParentNamed(name).Named(name);
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<CachingDynamicArgListObjectTypeFactory>().WhenParentNamed(name).Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            kernel.Bind<IDynamicArgListObjectTypeFactory>().To<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            kernel.Bind<ITypeShortNameFactory>().To<CachingTypeShortNameFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name).WithPropertyValue("Target", ctx => ctx.Kernel.Get<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            kernel.Bind<ITypeShortNameFactory>().To<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             kernel.Bind<ILogMessageFactory>().To<LogMessageFactory>().WhenParentNamed($"{name}MethodLogMessageFactory").Named(name);
             kernel.Bind<ILogValueMapperConfigurator>().To<DefaultLogValueMapperConfigurator>().WhenParentNamed(name).Named(name);
         }

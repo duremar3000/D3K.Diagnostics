@@ -5,7 +5,7 @@ using System.Text;
 
 namespace D3K.Diagnostics.Core
 {
-    public class CachingNLogMessageTemplateMapper: ILoggerMessageTemplateMapper
+    public class CachingNLogMessageTemplateMapper : ILoggerMessageTemplateMapper
     {
         readonly ConcurrentDictionary<string, string> _cache = new ConcurrentDictionary<string, string>();
 
@@ -13,7 +13,7 @@ namespace D3K.Diagnostics.Core
 
         public string ToLoggerMessageTemplate(string d3kMessageTemplate)
         {
-            var propertyNames = _cache.GetOrAdd(d3kMessageTemplate, Target.ToLoggerMessageTemplate(d3kMessageTemplate));
+            var propertyNames = _cache.GetOrAdd(d3kMessageTemplate, i => Target.ToLoggerMessageTemplate(i));
 
             return propertyNames;
         }

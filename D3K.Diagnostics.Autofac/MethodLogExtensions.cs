@@ -32,10 +32,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
@@ -58,10 +67,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
@@ -82,10 +100,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
@@ -107,10 +134,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
@@ -132,10 +168,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
@@ -158,10 +203,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
@@ -182,10 +236,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<ElapsedMethodLogMessageFactory>().Named<IMethodLogMessageFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<LogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }
@@ -207,10 +270,19 @@ namespace D3K.Diagnostics.Autofac
             builder.RegisterType<HashCodeMethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}HashCodeMethodLogMessageFactory").OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory"));
             builder.RegisterType<MethodLogMessageFactory>().Named<IMethodLogMessageFactory>($"{name}MethodLogMessageFactory")
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageSettings" && pi.ParameterType == typeof(ILogMessageSettings), (pi, ctx) => ctx.ResolveNamed<ILogMessageSettings>(name)))
-                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "argListObjectMapper" && pi.ParameterType == typeof(IArgListObjectMapper), (pi, ctx) => ctx.ResolveNamed<IArgListObjectMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "typeShortNameFactory" && pi.ParameterType == typeof(ITypeShortNameFactory), (pi, ctx) => ctx.ResolveNamed<ITypeShortNameFactory>(name)))
                 .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logMessageFactory" && pi.ParameterType == typeof(ILogMessageFactory), (pi, ctx) => ctx.ResolveNamed<ILogMessageFactory>(name)));
             builder.RegisterType<HashCodeLogMessageSettings>().Named<ILogMessageSettings>(name);
+            builder.RegisterType<ArgListObjectMapper>().Named<IArgListObjectMapper>(name)
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapper" && pi.ParameterType == typeof(ILogValueMapper), (pi, ctx) => ctx.ResolveNamed<ILogValueMapper>(name)))
+                .WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectFactory" && pi.ParameterType == typeof(IDynamicArgListObjectFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectFactory>(name)));
             builder.RegisterType<LogValueMapper>().Named<ILogValueMapper>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "logValueMapperConfigurator" && pi.ParameterType == typeof(ILogValueMapperConfigurator), (pi, ctx) => ctx.ResolveNamed<ILogValueMapperConfigurator>(name)));
+            builder.RegisterType<DynamicArgListObjectFactory>().Named<IDynamicArgListObjectFactory>(name).WithParameter(new ResolvedParameter((pi, ctx) => pi.Name == "dynamicArgListObjectTypeFactory" && pi.ParameterType == typeof(IDynamicArgListObjectTypeFactory), (pi, ctx) => ctx.ResolveNamed<IDynamicArgListObjectTypeFactory>(name)));
+            builder.RegisterType<CachingDynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory"));
+            builder.RegisterType<DynamicArgListObjectTypeFactory>().Named<IDynamicArgListObjectTypeFactory>($"{name}DynamicArgListObjectTypeFactory");
+            builder.RegisterType<CachingTypeShortNameFactory>().Named<ITypeShortNameFactory>(name).OnActivating(e => e.Instance.Target = e.Context.ResolveNamed<ITypeShortNameFactory>($"{name}TypeShortNameFactory"));
+            builder.RegisterType<TypeShortNameFactory>().Named<ITypeShortNameFactory>($"{name}TypeShortNameFactory");
             builder.RegisterType<LogMessageFactory>().Named<ILogMessageFactory>(name);
             builder.RegisterType<DefaultLogValueMapperConfigurator>().Named<ILogValueMapperConfigurator>(name);
         }

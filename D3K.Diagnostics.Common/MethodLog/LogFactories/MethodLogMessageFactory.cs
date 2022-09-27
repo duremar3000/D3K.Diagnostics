@@ -12,16 +12,19 @@ namespace D3K.Diagnostics.Common
     public class MethodLogMessageFactory : IMethodLogMessageFactory
     {
         readonly ILogMessageSettings _logMessageSettings;
-        readonly ILogValueMapper _logValueMapper;
+        readonly IArgListObjectMapper _argListObjectMapper;
+        readonly ITypeShortNameFactory _typeShortNameFactory;
         readonly ILogMessageFactory _logMessageFactory;
 
         public MethodLogMessageFactory(
             ILogMessageSettings logMessageSettings,
-            ILogValueMapper logValueMapper,
+            IArgListObjectMapper argListObjectMapper,
+            ITypeShortNameFactory typeShortNameFactory,
             ILogMessageFactory logMessageFactory)
         {
             _logMessageSettings = logMessageSettings ?? throw new ArgumentNullException();
-            _logValueMapper = logValueMapper ?? throw new ArgumentNullException();
+            _argListObjectMapper = argListObjectMapper ?? throw new ArgumentNullException();
+            _typeShortNameFactory = typeShortNameFactory ?? throw new ArgumentNullException();
             _logMessageFactory = logMessageFactory ?? throw new ArgumentNullException();
         }
 
@@ -30,17 +33,17 @@ namespace D3K.Diagnostics.Common
             var logMessage = _logMessageFactory.CreateLogMessage(_logMessageSettings.InputLogMessageTemplate);
 
             var methodDeclaringType = methodInput.Method.DeclaringType;
-            var methodDeclaringTypeName = ToShortName(methodDeclaringType);
+            var methodDeclaringTypeName = _typeShortNameFactory.CreateTypeShortName(methodDeclaringType);
             logMessage.AddMessageProperty("MethodDeclaringTypeName", methodDeclaringTypeName);
 
             var targetType = GetTargetType(methodInput);
-            var className = ToShortName(targetType);
+            var className = _typeShortNameFactory.CreateTypeShortName(targetType);
             logMessage.AddMessageProperty("ClassName", className);
 
             var methodName = methodInput.Method.Name;
             logMessage.AddMessageProperty("MethodName", methodName);
 
-            var inputArgs = _logValueMapper.ToArgs(methodInput);
+            var inputArgs = _argListObjectMapper.Map(methodInput);
             logMessage.AddMessageProperty("InputArgs", inputArgs);
 
             return (logMessage, correlationState: new CorrelationState { Input = methodInput, MethodDeclaringTypeName = methodDeclaringTypeName, ClassName = className, MethodName = methodName });

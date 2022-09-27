@@ -13,7 +13,7 @@ namespace D3K.Diagnostics.Core
 
         public string[] CreateLoggerPropertyNames(string d3kMessageTemplate)
         {
-            var propertyNames = _cache.GetOrAdd(d3kMessageTemplate, Target.CreateLoggerPropertyNames(d3kMessageTemplate));
+            var propertyNames = _cache.GetOrAdd(d3kMessageTemplate, i => Target.CreateLoggerPropertyNames(i));
 
             return propertyNames;
         }

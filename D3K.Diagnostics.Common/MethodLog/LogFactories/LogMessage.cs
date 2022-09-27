@@ -11,13 +11,11 @@ using Newtonsoft.Json;
 
 namespace D3K.Diagnostics.Common
 {
-    using static MethodLogMessageFactoryHelper;
-
     public class LogMessage : ILogMessage, IDictionary<string, object>
     {
         #region Fields
 
-        readonly string _messageTemplate;
+        static readonly JsonSerializerSettings _jsonSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
         readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
         readonly StringDictionary _stringProperties = new StringDictionary();
 
@@ -27,14 +25,14 @@ namespace D3K.Diagnostics.Common
 
         public LogMessage(string messageTemplate)
         {
-            _messageTemplate = messageTemplate ?? throw new ArgumentNullException();
+            MessageTemplate = messageTemplate ?? throw new ArgumentNullException();
         }
 
         #endregion
 
         #region ILogMessage
 
-        public string MessageTemplate => _messageTemplate;
+        public string MessageTemplate { get; }
 
         public void AddMessageProperty(string propertyName, string propertyValue)
         {
@@ -45,7 +43,7 @@ namespace D3K.Diagnostics.Common
         public void AddMessageProperty(string propertyName, object propertyValue)
         {
             _properties[propertyName] = propertyValue;
-            _stringProperties[propertyName] = JsonConvert.SerializeObject(propertyValue, JsonSettings);
+            _stringProperties[propertyName] = JsonConvert.SerializeObject(propertyValue, _jsonSettings);
         }
 
         public void AddMessageProperty(string propertyName, Exception propertyValue)
@@ -156,7 +154,7 @@ namespace D3K.Diagnostics.Common
 
         public override string ToString()
         {
-            var res = Regex.Replace(_messageTemplate, @"{{(?<propertyName>[^{]+)}}", match => _stringProperties[match.Groups["propertyName"].Value]);
+            var res = Regex.Replace(MessageTemplate, @"{{(?<propertyName>[^{]+)}}", match => _stringProperties[match.Groups["propertyName"].Value]);
 
             return res;
         }

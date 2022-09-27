@@ -24,16 +24,19 @@ namespace D3K.Diagnostics.Lamar
                 .Ctor<ILogger>().IsNamedInstance(name)
                 .Ctor<IMethodLogMessageFactory>().IsNamedInstance(name);
 
-            serviceRegistry.For<ILogger>().Add(sc => CreateLogger(sc.GetInstance<ILogListener>(name))).Named(name);            
+            serviceRegistry.For<ILogger>().Add(sc => CreateLogger(sc.GetInstance<ILogListener>(name))).Named(name);
             serviceRegistry.For<ILogListenerFactory>().Use<TLogListenerFactory>().Named(name);
-            serviceRegistry.For<ILogListener>().Use(sc=>sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
+            serviceRegistry.For<ILogListener>().Use(sc => sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>("Target").IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");            
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
@@ -55,12 +58,15 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(sc => sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
@@ -80,12 +86,15 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogger>().Add(sc => CreateLogger(sc.GetInstance<ILogListener>(name))).Named(name);
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
@@ -106,12 +115,15 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
@@ -132,12 +144,15 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListenerFactory>().Use<TLogListenerFactory>().Named(name);
             serviceRegistry.For<ILogListener>().Use(sc => sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
@@ -159,12 +174,15 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(sc => sc.GetInstance<ILogListenerFactory>().CreateLogListener(loggerName)).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
@@ -184,12 +202,15 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogger>().Add(sc => CreateLogger(sc.GetInstance<ILogListener>(name))).Named(name);
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<LogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
@@ -210,12 +231,15 @@ namespace D3K.Diagnostics.Lamar
             serviceRegistry.For<ILogListener>().Use(logListener).Singleton().Named(name);
             serviceRegistry.For<IMethodLogMessageFactory>().Use<ElapsedMethodLogMessageFactory>().Named(name).Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}HashCodeMethodLogMessageFactory");
             serviceRegistry.For<IMethodLogMessageFactory>().Use<HashCodeMethodLogMessageFactory>().Named($"{name}HashCodeMethodLogMessageFactory").Setter<IMethodLogMessageFactory>().IsNamedInstance($"{name}MethodLogMessageFactory");
-            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory")
-                .Ctor<ILogMessageSettings>().IsNamedInstance(name)
-                .Ctor<ILogValueMapper>().IsNamedInstance(name)
-                .Ctor<ILogMessageFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IMethodLogMessageFactory>().Use<MethodLogMessageFactory>().Named($"{name}MethodLogMessageFactory").Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IArgListObjectMapper>().IsNamedInstance(name).Ctor<ITypeShortNameFactory>().IsNamedInstance(name).Ctor<ILogMessageFactory>().IsNamedInstance(name);
             serviceRegistry.For<ILogMessageSettings>().Use<HashCodeLogMessageSettings>().Named(name);
-            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name).Named(name);
+            serviceRegistry.For<IArgListObjectMapper>().Use<ArgListObjectMapper>().Named(name).Ctor<ILogMessageSettings>().IsNamedInstance(name).Ctor<IDynamicArgListObjectFactory>().IsNamedInstance(name);
+            serviceRegistry.For<ILogValueMapper>().Use<LogValueMapper>().Named(name).Ctor<ILogValueMapperConfigurator>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectFactory>().Use<DynamicArgListObjectFactory>().Named(name).Ctor<IDynamicArgListObjectTypeFactory>().IsNamedInstance(name);
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<CachingDynamicArgListObjectTypeFactory>().Named(name).Setter<IDynamicArgListObjectTypeFactory>("Target").IsNamedInstance($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<IDynamicArgListObjectTypeFactory>().Use<DynamicArgListObjectTypeFactory>().Named($"{name}DynamicArgListObjectTypeFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<CachingTypeShortNameFactory>().Named(name).Setter<ITypeShortNameFactory>("Target").IsNamedInstance($"{name}TypeShortNameFactory");
+            serviceRegistry.For<ITypeShortNameFactory>().Use<TypeShortNameFactory>().Named($"{name}TypeShortNameFactory");
             serviceRegistry.For<ILogMessageFactory>().Use<LogMessageFactory>().Named(name);
             serviceRegistry.For<ILogValueMapperConfigurator>().Use<DefaultLogValueMapperConfigurator>().Named(name);
         }
